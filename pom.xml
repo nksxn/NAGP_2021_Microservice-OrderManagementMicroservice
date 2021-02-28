@@ -9,11 +9,11 @@
 		<version>2.2.4.RELEASE</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>org.selflearning.msa</groupId>
-	<artifactId>products</artifactId>
+	<groupId>com.nagarro.nagp.orderManagement</groupId>
+	<artifactId>orderManagement</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>products</name>
-	<description>Demo project for Spring Boot</description>
+	<name>orderManagement</name>
+	<description>Order management microserivce for Nagp2021</description>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -40,6 +40,12 @@
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
 		</dependency>
 	</dependencies>
 	
