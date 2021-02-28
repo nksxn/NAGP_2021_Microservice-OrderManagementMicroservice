@@ -59,12 +59,12 @@ public class OrderManagementController {
 		return new ResponseEntity<List<Order>>(result, headers, HttpStatus.OK);
 	}
 
-	@PostMapping(value = "/status")
-	public ResponseEntity<Void> changeOrderStatus(@RequestBody String code, @RequestBody String status) {
+	@PostMapping(value = "/status/{status}")
+	public ResponseEntity<Void> changeOrderStatus(@RequestBody String code, @PathVariable("status") String status) {
 		LOG.info("Working from port " + port + " of Order management microservice");
 		if (orderManagementService.changeOrderStatus(code, status)) {
 			HttpHeaders headers = new HttpHeaders();
-			return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+			return new ResponseEntity<Void>(headers, HttpStatus.OK);
 		} else {
 			return new ResponseEntity<Void>(new HttpHeaders(), HttpStatus.SERVICE_UNAVAILABLE);
 		}
