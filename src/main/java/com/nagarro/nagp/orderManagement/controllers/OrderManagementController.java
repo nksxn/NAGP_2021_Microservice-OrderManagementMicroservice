@@ -36,7 +36,7 @@ public class OrderManagementController {
 
 	@GetMapping(value = "/{code}")
 	Order getOrderForCode(@PathVariable(name = "code") String code) {
-		LOG.info("Working from port " + port + " of Order management service");
+		LOG.info("Working from port " + port + " of Order management miroservice");
 		return orderManagementService.getOrderForCode(code);
 	}
 
