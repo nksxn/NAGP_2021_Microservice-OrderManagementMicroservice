@@ -4,17 +4,29 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import com.nagarro.nagp.orderManagement.dao.OrderManagementDao;
 import com.nagarro.nagp.orderManagement.entities.Order;
 import com.nagarro.nagp.orderManagement.services.OrderManagementService;
+import com.netflix.appinfo.InstanceInfo;
+import com.netflix.discovery.EurekaClient;
 
 @Service
 public class OrderManagementServiceImpl implements OrderManagementService {
 
 	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+
+	@Autowired
+	private EurekaClient eurekaClient;
+
+	@Resource(name = "restTemp")
+	private RestTemplate restTemplate;
 
 	@Autowired
 	OrderManagementDao orderManagementDao;
@@ -51,6 +63,32 @@ public class OrderManagementServiceImpl implements OrderManagementService {
 	@Override
 	public List<Order> getAllOrdersForServiceArea(String serviceArea) {
 		return orderManagementDao.getAllOrdersForServiceArea(serviceArea);
+	}
+
+	@Override
+	public void notifyProviders(String code) {
+		Order order = getOrderForCode(code);
+		String url = "/provider/notifyProviders";
+		HttpEntity<String> request = new HttpEntity<>(order.getServiceRegion());
+		InstanceInfo instance = eurekaClient.getNextServerFromEureka("orders", false);
+		restTemplate.postForObject(instance.getHomePageUrl() + url, request, null);
+
+	}
+
+	public EurekaClient getEurekaClient() {
+		return eurekaClient;
+	}
+
+	public void setEurekaClient(EurekaClient eurekaClient) {
+		this.eurekaClient = eurekaClient;
+	}
+
+	public RestTemplate getRestTemplate() {
+		return restTemplate;
+	}
+
+	public void setRestTemplate(RestTemplate restTemplate) {
+		this.restTemplate = restTemplate;
 	}
 
 }

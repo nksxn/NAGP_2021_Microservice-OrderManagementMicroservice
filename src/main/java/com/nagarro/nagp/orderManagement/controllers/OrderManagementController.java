@@ -87,4 +87,10 @@ public class OrderManagementController {
 		return new ResponseEntity<List<Order>>(result, headers, HttpStatus.OK);
 	}
 
+	@PostMapping(value = "/notify")
+	public ResponseEntity<Void> notifyProviders(@RequestBody String code) {
+		orderManagementService.notifyProviders(code);
+		return new ResponseEntity<Void>(new HttpHeaders(), HttpStatus.OK);
+	}
+
 }

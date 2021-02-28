@@ -16,4 +16,6 @@ public interface OrderManagementService {
 	List<Order> getAllOrdersForUsername(String username);
 
 	List<Order> getAllOrdersForServiceArea(String serviceArea);
+
+	void notifyProviders(String code);
 }
