@@ -18,4 +18,6 @@ public interface OrderManagementService {
 	List<Order> getAllOrdersForServiceArea(String serviceArea);
 
 	void notifyProviders(String code);
+
+	void updateProvider(String code, String username);
 }

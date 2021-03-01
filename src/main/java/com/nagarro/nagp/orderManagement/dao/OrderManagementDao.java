@@ -75,4 +75,9 @@ public class OrderManagementDao {
 		return result;
 	}
 
+	public void save(Order order) {
+		orders.add(order);
+
+	}
+
 }

@@ -75,6 +75,22 @@ public class OrderManagementServiceImpl implements OrderManagementService {
 
 	}
 
+	@Override
+	public void updateProvider(String code, String username) {
+		Order order = getOrderForCode(code);
+		order.setServiceProvider(username);
+		changeOrderStatus(code, "Complete");
+		orderManagementDao.save(order);
+
+		HttpEntity<String> request1 = new HttpEntity<>(order.getUsername());
+		InstanceInfo instance1 = eurekaClient.getNextServerFromEureka("users", false);
+		restTemplate.postForObject(instance1.getHomePageUrl() + "notifyUser", request1, null);
+
+		HttpEntity<String> request2 = new HttpEntity<>(order.getServiceProvider());
+		InstanceInfo instance2 = eurekaClient.getNextServerFromEureka("providers", false);
+		restTemplate.postForObject(instance2.getHomePageUrl() + "notifyProvider", request2, null);
+	}
+
 	public EurekaClient getEurekaClient() {
 		return eurekaClient;
 	}

@@ -93,4 +93,10 @@ public class OrderManagementController {
 		return new ResponseEntity<Void>(new HttpHeaders(), HttpStatus.OK);
 	}
 
+	@PostMapping(value = "/updateProvider/{code}")
+	public ResponseEntity<Void> updateProvider(@PathVariable("code") String code, @RequestBody String username) {
+		orderManagementService.updateProvider(code, username);
+		return new ResponseEntity<Void>(new HttpHeaders(), HttpStatus.OK);
+	}
+
 }
